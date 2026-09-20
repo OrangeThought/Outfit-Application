@@ -6,6 +6,9 @@
 
     <title>Hello World</title>
 
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f2f2f2">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -20,6 +23,12 @@
     </button>
 
     <script src="script.js"></script>
+
+    <script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js");
+    }
+    </script>
 
 </body>
 </html>
