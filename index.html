@@ -4,30 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Hello World</title>
-
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#f2f2f2">
+    <title>Test import photos</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Hello World 👋</h1>
+    <h1>📸 Ma garde-robe</h1>
 
-    <p id="message">Chargement...</p>
-
-    <button onclick="direBonjour()">
-        Clique-moi
+    <button id="importButton">
+        📥 Importer mes photos
     </button>
+
+    <input
+        type="file"
+        id="photoInput"
+        accept="image/*"
+        multiple
+        style="display: none;"
+    >
+
+    <p id="count">Aucune photo importée</p>
+
+    <div id="gallery"></div>
 
     <script src="script.js"></script>
 
     <script>
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js");
-    }
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./sw.js");
+        }
     </script>
 
 </body>
