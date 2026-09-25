@@ -1,6 +1,6 @@
 {
-  "name": "Hello App",
-  "short_name": "Hello",
+  "name": "Outfit-App",
+  "short_name": "Outfit",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f2f2f2",

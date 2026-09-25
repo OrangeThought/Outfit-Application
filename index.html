@@ -4,30 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Test import photooooooooooos</title>
+    <title>Outfit-App</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#f2f2f2">
 </head>
 
 <body>
 
-    <h1>📸 Ma garde-robe</h1>
+    <div id="main-title">
+        <h1>Tenue du jour</h1>
+    </div>
 
-    <button id="importButton">
-        📥 Importer mes photos
-    </button>
-
-    <input
-        type="file"
-        id="photoInput"
-        accept="image/*"
-        multiple
-        style="display: none;"
-    >
-
-    <p id="count">Aucune photo importée</p>
-
-    <div id="gallery"></div>
+    <div id="main-page">
+        <button id="changer-haut">Au lavage / Flemme</button>
+        <div id="BAS+HAUT">
+            <div id="HAUT">photo haut</div>
+            <div id="BAS">photo bas</div>
+        </div>
+        <button id="changer-bas">Au lavage / Flemme</button>
+    </div>
 
     <script src="script.js"></script>
 

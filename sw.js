@@ -1,4 +1,4 @@
-const CACHE_NAME = "hello-app-v3";
+const CACHE_NAME = "outfit-app-v4";
 
 const FILES_TO_CACHE = [
     "./",
@@ -34,9 +34,6 @@ self.addEventListener("fetch", event => {
     event.respondWith(
         fetch(event.request)
             .then(response => {
-
-                // On utilise la nouvelle version venant du serveur
-                // et on la remet dans le cache.
                 const responseClone = response.clone();
 
                 caches.open(CACHE_NAME).then(cache => {
@@ -46,8 +43,6 @@ self.addEventListener("fetch", event => {
                 return response;
             })
             .catch(() => {
-                // Si Internet est indisponible,
-                // on utilise la version locale.
                 return caches.match(event.request);
             })
     );
