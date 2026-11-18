@@ -13,17 +13,131 @@
 
 <body>
 
-    <div id="main-title">
-        <h1>Tenue du jour</h1>
-    </div>
+    <div id="background">
 
-    <div id="main-page">
-        <button id="changer-haut">Au lavage / Flemme</button>
-        <div id="BAS+HAUT">
-            <div id="HAUT">photo haut</div>
-            <div id="BAS">photo bas</div>
+        <div id="main-title">
+            <h1>Tenue du jour</h1>
         </div>
-        <button id="changer-bas">Au lavage / Flemme</button>
+
+        <div id="menu-principal">
+
+            <div id="main-page">
+                <button id="tenue-aleatoire">Tenue Aléatoire</button>
+                <button id="parcourir">Parcourir mes vêtements</button>
+            </div>
+
+        </div>
+        <!-- ================================= -->
+        <!-- PAGE PARCOURIR LES VETEMENTS -->
+        <!-- ================================= -->
+
+        <div id="page-parcourir">
+
+            <h1>Mon dressing</h1>
+
+            <div id="choix-type-vetement">
+
+                <button class="bouton-navigation" data-type="haut">
+                    Haut
+                </button>
+
+                <button class="bouton-navigation" data-type="bas">
+                    Bas
+                </button>
+
+                <button class="bouton-navigation" data-type="autre">
+                    Autre
+                </button>
+
+            </div>
+
+            <button id="retour-parcourir">
+                Retour
+            </button>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- PAGE CATEGORIES -->
+        <!-- ================================= -->
+
+        <div id="page-categories">
+
+            <h1 id="titre-categories">Catégories</h1>
+
+            <div id="liste-categories"></div>
+
+            <button id="retour-categories">
+                Retour
+            </button>
+
+        </div>
+        <!-- ================================= -->
+        <!-- PAGE GALERIE PHOTOS -->
+        <!-- ================================= -->
+
+        <div id="page-galerie">
+
+            <h1 id="titre-galerie">Mes vêtements</h1>
+
+            <div id="galerie-vetements"></div>
+
+            <button id="retour-galerie">
+                Retour
+            </button>
+
+        </div>
+
+        <div id="page-tenue">
+
+            <h1 id="titre-tenue">Ta tenue</h1>
+
+            <p id="meteo-tenue"></p>
+
+            <div id="choix-temperature">
+                <button id="temperature-froid">0 à 15 °C</button>
+                <button id="temperature-intermediaire">15 à 24 °C</button>
+                <button id="temperature-chaud">24 °C et +</button>
+            </div>
+
+            <div id="vetements">
+
+                <div id="tenue-haut-bas">
+
+                    <div id="superposition-vetements">
+
+                        <img id="image-bas" src="" alt="Bas">
+
+                        <img id="image-haut" src="" alt="Haut">
+
+                    </div>
+
+                </div>
+
+
+                <div id="tenue-autre">
+
+                    <div class="vetement">
+                        <h2 id="titre-autre">Tenue</h2>
+                        <img id="image-autre" src="" alt="Tenue">
+                        <p id="nom-autre"></p>
+                    </div>
+
+                </div>
+
+                <div id="navigation-associations">
+                    <button id="bas-precedent" class="fleche-vetement">←</button>
+                    <span id="compteur-associations"></span>
+                    <button id="bas-suivant" class="fleche-vetement">→</button>
+                </div>
+
+            </div>
+
+            <button id="retour">Retour</button>
+
+        </div>
+
     </div>
 
     <script src="script.js"></script>
