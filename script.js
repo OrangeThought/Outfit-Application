@@ -1479,3 +1479,21 @@ async function supprimerPhoto(nomPhoto) {
     });
 
 }
+
+// ==========================================
+// EFFETS HAPTIQUES SUR LES BOUTONS
+// ==========================================
+
+function vibrer() {
+    if ("vibrate" in navigator) {
+        navigator.vibrate(300);
+    }
+}
+
+document.addEventListener("click", function(event) {
+    const bouton = event.target.closest("button");
+
+    if (bouton) {
+        vibrer();
+    }
+});

@@ -578,3 +578,209 @@ body {
 #gerer-photos:hover {
     opacity: 0.5;
 }
+
+/*hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+
+/* Adaptation automatique à la taille de l'écran */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Conteneur principal */
+#background {
+    width: 100%;
+    max-width: 400px;
+    min-height: 400px;
+    height: auto;
+    padding: 25px 15px;
+    margin: 0 auto;
+}
+
+/* Titre */
+#main-title {
+    width: min(220px, 90%);
+    margin: 0 auto;
+}
+
+/* Menu principal */
+#menu-principal,
+#main-page {
+    width: 100%;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Boutons */
+#tenue-aleatoire,
+#parcourir,
+#importer-photos,
+#gerer-photos {
+    width: 90%;
+    max-width: 240px;
+    min-height: 55px;
+    height: auto;
+    padding: 10px;
+    font-size: clamp(18px, 5vw, 30px);
+    overflow-wrap: break-word;
+}
+
+/* Pages et galeries */
+#page-parcourir,
+#page-categories,
+#page-galerie,
+#page-gestion-photos {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Petits écrans */
+@media (max-width: 350px) {
+    body {
+        padding: 12px 6px;
+    }
+
+    #background {
+        padding: 20px 8px;
+    }
+
+    #galerie-vetements {
+        width: 100%;
+        gap: 8px;
+    }
+}
+
+/* Apparition progressive */
+@keyframes apparition {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation du fond */
+#background {
+    animation: apparition 0.6s ease-out;
+}
+
+/* Animation des boutons */
+button {
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+/* Animation des vêtements dans la galerie */
+.image-galerie {
+    animation: apparition 0.4s ease-out;
+    transition: transform 0.25s ease;
+}
+
+.image-galerie:hover {
+    transform: scale(1.04);
+}
+
+/* Animation des blocs de gestion des photos */
+#liste-photos-enregistrees > div {
+    animation: apparition 0.4s ease-out;
+}
+
+/* Respect des préférences de mouvement */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Transitions fluides */
+button {
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    transition:
+        transform 0.18s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+/* Quand on appuie sur un bouton */
+button:active {
+    transform: scale(0.94);
+    opacity: 0.75;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Effet au survol sur ordinateur */
+@media (hover: hover) {
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        filter: brightness(1.04);
+    }
+}
+
+#tenue-aleatoire,
+#parcourir,
+#importer-photos,
+#gerer-photos {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.10);
+}
+
+#tenue-aleatoire:active,
+#parcourir:active,
+#importer-photos:active,
+#gerer-photos:active {
+    background-color: rgb(160, 205, 207);
+}
+
+@keyframes apparitionPage {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#page-parcourir,
+#page-categories,
+#page-galerie,
+#page-gestion-photos {
+    animation: apparitionPage 0.35s ease-out;
+}
