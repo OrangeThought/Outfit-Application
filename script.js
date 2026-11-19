@@ -1502,29 +1502,3 @@ function animerTitre() {
         }
     }, 60);
 }
-
-// ==========================================
-// SON AU CLIC DES BOUTONS
-// ==========================================
-
-const sonClic = new Audio("clic.mp3");
-
-document.addEventListener("click", function(event) {
-    if (!(event.target instanceof Element)) return;
-
-    const bouton = event.target.closest("button");
-
-    if (bouton) {
-        sonClic.currentTime = 0;
-        sonClic.play().catch(() => {});
-    }
-});
-
-// MUSIQUE D'AMBIANCE
-
-const musique = new Audio("ambiance.mp3");
-
-musique.loop = true;
-musique.volume = 0.1;
-
-musique.play();
