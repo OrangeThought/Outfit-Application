@@ -76,20 +76,17 @@ body {
 #main-page {
     display: flex;
     flex-direction: column;
-
     background-color: rgba(85, 85, 85, 0.264);
-
     align-items: center;
     justify-content: center;
-
-    gap: 30px;
-
+    gap: 20px;
     width: 320px;
-    height: 200px;
-
+    min-height: 200px;
+    height: auto;
+    padding: 20px 0;
     border-radius: 20px;
+    box-sizing: border-box;
 }
-
 
 #tenue-aleatoire,
 #parcourir,
@@ -481,4 +478,103 @@ body {
 
 .image-galerie:hover {
     transform: scale(1.04);
+}
+
+/* ================================= */
+/* PAGE GESTION DES PHOTOS */
+/* ================================= */
+
+#page-gestion-photos {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 25px;
+}
+
+/* BOUTON RETOUR ET SUPPRIMER */
+
+#retour-gestion-photos,
+#liste-photos-enregistrees button {
+    width: 240px;
+    min-height: 55px;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 22px;
+    font-weight: 600;
+
+    background: rgb(196, 226, 227);
+
+    transition: 0.2s;
+}
+
+/* EFFET AU SURVOL */
+
+#retour-gestion-photos:hover,
+#liste-photos-enregistrees button:hover {
+    opacity: 0.5;
+}
+
+/* LISTE DES PHOTOS */
+
+#liste-photos-enregistrees {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* CHAQUE PHOTO */
+
+#liste-photos-enregistrees > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    width: 280px;
+    padding: 15px;
+
+    border-radius: 10px;
+    background: rgba(85, 85, 85, 0.15);
+}
+
+/* IMAGE */
+
+#liste-photos-enregistrees img {
+    width: auto;
+    height: 150px;
+    max-width: 220px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+/* NOM DU FICHIER */
+
+#liste-photos-enregistrees span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#importer-photos,
+#gerer-photos {
+    width: 240px;
+    height: 100px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: 600;
+    background: rgb(196, 226, 227);
+    transition: 0.2s;
+}
+
+#importer-photos:hover,
+#gerer-photos:hover {
+    opacity: 0.5;
 }
