@@ -442,12 +442,15 @@ const VETEMENTS_INTERMEDIAIRES = {
         "00", // Pantalon
         "01", // Jean
         "02", // Pantalon léger
+        "03",
         "04"  // Jupe
     ],
 
     autres: [
         "00", // combi
-        "02" // robe d'hivers
+        "01",
+        "02", // robe d'hivers
+        "03"
     ]
 };
 
@@ -458,10 +461,13 @@ const VETEMENTS_CHAUDS = {
         "00", // T-shirt
         "01", // Débardeur
         "02", // Chemise
-        "06"  // Marcel
+        "06",  // Marcel
+        "07"
     ],
 
     bas: [
+        "00",
+        "01",
         "02", // Pantalon léger
         "03", // Short
         "04"  // Jupe
