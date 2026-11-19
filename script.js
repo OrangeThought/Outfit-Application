@@ -1258,6 +1258,8 @@ boutonRetourGalerie.addEventListener("click", function () {
 // INITIALISATION DE L'APPLICATION
 // ==========================================
 
+animerTitre();
+
 const boutonImporter =
     document.getElementById("importer-photos");
 
@@ -1479,3 +1481,50 @@ async function supprimerPhoto(nomPhoto) {
     });
 
 }
+
+function animerTitre() {
+    const titre = document.getElementById("main-title");
+    if (!titre) return;
+
+    const texte = "Bonjour, que souhaites-tu porter aujourd'hui ? 🤔";
+    titre.innerHTML = "";
+    titre.style.fontSize = "22px";
+    titre.style.fontWeight = "bold";
+
+    let index = 0;
+
+    const intervalle = setInterval(() => {
+        titre.textContent += texte[index];
+        index++;
+
+        if (index >= texte.length) {
+            clearInterval(intervalle);
+        }
+    }, 60);
+}
+
+// ==========================================
+// SON AU CLIC DES BOUTONS
+// ==========================================
+
+const sonClic = new Audio("clic.mp3");
+
+document.addEventListener("click", function(event) {
+    if (!(event.target instanceof Element)) return;
+
+    const bouton = event.target.closest("button");
+
+    if (bouton) {
+        sonClic.currentTime = 0;
+        sonClic.play().catch(() => {});
+    }
+});
+
+// MUSIQUE D'AMBIANCE
+
+const musique = new Audio("ambiance.mp3");
+
+musique.loop = true;
+musique.volume = 0.1;
+
+musique.play();

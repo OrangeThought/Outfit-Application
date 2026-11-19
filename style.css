@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     padding: 20px;
-    background: #f2f2f2;
+    background: #ffffff;
 }
 
 
@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
 
-    background-color: rgba(169, 144, 107, 0.511);
+    background-color: rgba(215, 216, 216, 0.511);
 
     align-items: center;
     justify-content: center;
@@ -40,10 +40,10 @@ body {
 #main-title {
     display: flex;
 
-    background-color: rgba(174, 155, 126, 0.538);
+    background-color: rgba(209, 211, 211, 0.538);
 
     width: 220px;
-    height: 45px;
+    height: 100px;
 
     border-radius: 10px;
 
@@ -55,7 +55,7 @@ body {
 }
 
 #main-title h1 {
-    font-size: 24px;
+    font-size: 22px;
 }
 
 
@@ -76,7 +76,7 @@ body {
 #main-page {
     display: flex;
     flex-direction: column;
-    background-color: rgba(85, 85, 85, 0.264);
+    background-color: rgba(209, 211, 211, 0.538);
     align-items: center;
     justify-content: center;
     gap: 20px;
@@ -98,7 +98,7 @@ body {
 
     font-weight: 600;
 
-    background: rgb(196, 226, 227);
+    background: rgba(127, 222, 222, 0.511);
 
     transition: 0.2s;
 }
@@ -251,7 +251,7 @@ body {
     font-size: 20px;
     font-weight: 600;
 
-    background: rgb(196, 226, 227);
+    background: rgba(127, 222, 222, 0.511);
 
     transition: 0.2s;
 }
@@ -368,7 +368,7 @@ body {
     font-size: 22px;
     font-weight: 600;
 
-    background: rgb(196, 226, 227);
+    background: rgba(127, 222, 222, 0.511);
 
     transition: 0.2s;
 }
@@ -435,7 +435,7 @@ body {
     font-size: 22px;
     font-weight: 600;
 
-    background: rgb(196, 226, 227);
+    background: rgba(127, 222, 222, 0.511);
 
     transition: 0.2s;
 }
@@ -457,7 +457,7 @@ body {
     height: 50px;
     border: none;
     border-radius: 10px;
-    background-color: rgb(196, 226, 227);
+    background-color: rgba(127, 222, 222, 0.511);
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
@@ -507,7 +507,7 @@ body {
     font-size: 22px;
     font-weight: 600;
 
-    background: rgb(196, 226, 227);
+    background: rgba(127, 222, 222, 0.511);
 
     transition: 0.2s;
 }
@@ -570,7 +570,7 @@ body {
     cursor: pointer;
     font-size: 30px;
     font-weight: 600;
-    background: rgb(196, 226, 227);
+    background: rgba(127, 222, 189, 0.511);
     transition: 0.2s;
 }
 
@@ -782,5 +782,5 @@ button:active {
 #page-categories,
 #page-galerie,
 #page-gestion-photos {
-    animation: apparitionPage 0.35s ease-out;
+    animation: apparitionPage 0.4s ease-out;
 }
