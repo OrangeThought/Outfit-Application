@@ -2,8 +2,156 @@
 // CONFIGURATION
 // ======================================================
 
-// Dossier contenant les photos
-const DOSSIER_PHOTOS = "./photos/";
+// ==========================================
+// STOCKAGE LOCAL DES PHOTOS SUR IPHONE
+// ==========================================
+
+const DB_NAME = "OutfitAppDB";
+const DB_VERSION = 1;
+
+let db;
+let photos = [];
+let urlsPhotos = new Map();
+
+function ouvrirBaseDonnees() {
+
+    return new Promise((resolve, reject) => {
+
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        request.onupgradeneeded = function(event) {
+
+            const database = event.target.result;
+
+            if (!database.objectStoreNames.contains("photos")) {
+
+                database.createObjectStore("photos", {
+                    keyPath: "nom"
+                });
+
+            }
+
+        };
+
+        request.onsuccess = function() {
+            resolve(request.result);
+        };
+
+        request.onerror = function() {
+            reject(request.error);
+        };
+
+    });
+
+}
+
+
+// ==========================================
+// IMPORTER LES PHOTOS
+// ==========================================
+
+async function importerPhotos(fichiers) {
+
+    const transaction = db.transaction(
+        "photos",
+        "readwrite"
+    );
+
+    const stockage = transaction.objectStore("photos");
+
+    for (const fichier of fichiers) {
+
+        if (!fichier.type.startsWith("image/")) {
+            continue;
+        }
+
+        stockage.put({
+
+            nom: fichier.name,
+
+            image: fichier
+
+        });
+
+    }
+
+    return new Promise((resolve, reject) => {
+
+        transaction.oncomplete = resolve;
+
+        transaction.onerror = () => {
+            reject(transaction.error);
+        };
+
+    });
+
+}
+
+// ==========================================
+// CHARGER LES PHOTOS DEPUIS L'IPHONE
+// ==========================================
+
+async function chargerPhotos() {
+
+    const transaction = db.transaction(
+        "photos",
+        "readonly"
+    );
+
+    const stockage = transaction.objectStore("photos");
+
+    const request = stockage.getAll();
+
+    return new Promise((resolve, reject) => {
+
+        request.onsuccess = function() {
+
+            // Supprimer les anciennes URL temporaires
+
+            urlsPhotos.forEach(url => {
+                URL.revokeObjectURL(url);
+            });
+
+            urlsPhotos.clear();
+
+            // Récupérer les noms des photos
+
+            photos = request.result.map(photo => photo.nom);
+
+            // Créer les URL locales
+
+            request.result.forEach(photo => {
+
+                const url = URL.createObjectURL(photo.image);
+
+                urlsPhotos.set(photo.nom, url);
+
+            });
+
+            console.log("Photos locales :", photos);
+
+            resolve();
+
+        };
+
+        request.onerror = function() {
+            reject(request.error);
+        };
+
+    });
+
+}
+
+
+// ==========================================
+// RECUPERER UNE PHOTO
+// ==========================================
+
+function obtenirPhoto(nomFichier) {
+
+    return urlsPhotos.get(nomFichier) || "";
+
+}
 
 // Seuils de température
 const SEUIL_FROID = 15;
@@ -339,8 +487,6 @@ const VETEMENTS_CHAUDS = {
 //
 // Ce fichier sera expliqué plus bas.
 
-let photos = [];
-
 // Vêtements compatibles affichés dans la galerie
 let vetementsCompatibles = [];
 
@@ -666,7 +812,7 @@ function afficherVetementCompatible() {
     if (vetement.type === "bas") {
 
         const hautActuel = analyserPhoto(
-            imageHaut.src.split("/").pop()
+            retrouverNomPhoto(imageHaut.src)
         );
 
         afficherTenue({
@@ -682,7 +828,7 @@ function afficherVetementCompatible() {
     else if (vetement.type === "haut") {
 
         const basActuel = analyserPhoto(
-            imageBas.src.split("/").pop()
+            retrouverNomPhoto(imageBas.src)
         );
 
         afficherTenue({
@@ -736,7 +882,7 @@ function afficherGalerie(type, categorie, nomCategorie) {
 
         const image = document.createElement("img");
 
-        image.src = DOSSIER_PHOTOS + vetement.fichier;
+        image.src = obtenirPhoto(vetement.fichier);
         image.alt = nomCategorie;
         image.className = "image-galerie";
         image.loading = "lazy";
@@ -933,7 +1079,7 @@ function afficherTenue(tenue, temperature) {
 
         // Image
         imageAutre.src =
-            DOSSIER_PHOTOS + autre.fichier;
+            obtenirPhoto(autre.fichier);
 
 
         // Nom
@@ -967,10 +1113,10 @@ function afficherTenue(tenue, temperature) {
 
         // Images
         imageHaut.src =
-            DOSSIER_PHOTOS + haut.fichier;
+            obtenirPhoto(haut.fichier);
 
         imageBas.src =
-            DOSSIER_PHOTOS + bas.fichier;
+            obtenirPhoto(bas.fichier);
 
 
         // Noms (uniquement si les éléments existent)
@@ -1132,12 +1278,6 @@ boutonRetour.addEventListener("click", function () {
 });
 
 // ======================================================
-// CHARGEMENT INITIAL
-// ======================================================
-
-chargerPhotos();
-
-// ======================================================
 // RETOUR DEPUIS LA GALERIE
 // ======================================================
 
@@ -1150,3 +1290,90 @@ boutonRetourGalerie.addEventListener("click", function () {
     pageCategories.style.display = "flex";
 
 });
+
+// ==========================================
+// INITIALISATION DE L'APPLICATION
+// ==========================================
+
+const boutonImporter =
+    document.getElementById("importer-photos");
+
+const fichiersPhotos =
+    document.getElementById("fichiers-photos");
+
+const statutPhotos =
+    document.getElementById("statut-photos");
+
+boutonImporter.addEventListener("click", function() {
+
+    fichiersPhotos.click();
+
+});
+
+
+fichiersPhotos.addEventListener("change", async function() {
+
+    try {
+
+        statutPhotos.textContent = "Importation en cours...";
+
+        await importerPhotos(fichiersPhotos.files);
+
+        await chargerPhotos();
+
+        statutPhotos.textContent =
+            photos.length + " vêtements enregistrés sur cet iPhone.";
+
+        fichiersPhotos.value = "";
+
+    } catch (erreur) {
+
+        console.error(erreur);
+
+        statutPhotos.textContent =
+            "Erreur pendant l'importation.";
+
+    }
+
+});
+
+// ==========================================
+// DEMARRAGE
+// ==========================================
+
+async function initialiserApplication() {
+
+    try {
+
+        db = await ouvrirBaseDonnees();
+
+        await chargerPhotos();
+
+        statutPhotos.textContent =
+            photos.length + " vêtements enregistrés sur cet iPhone.";
+
+    } catch (erreur) {
+
+        console.error(erreur);
+
+        alert("Impossible d'ouvrir le stockage des photos.");
+
+    }
+
+}
+
+initialiserApplication();
+
+function retrouverNomPhoto(url) {
+
+    for (const [nom, urlLocale] of urlsPhotos) {
+
+        if (urlLocale === url) {
+            return nom;
+        }
+
+    }
+
+    return "";
+
+}

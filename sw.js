@@ -1,4 +1,4 @@
-const CACHE_NAME = "outfit-app-v4";
+const CACHE_NAME = "outfit-app-v5";
 
 const FILES_TO_CACHE = [
     "./",
