@@ -1340,3 +1340,142 @@ function retrouverNomPhoto(url) {
     return "";
 
 }
+
+// ==========================================
+// GESTION ET SUPPRESSION DES PHOTOS
+// ==========================================
+
+const boutonGererPhotos =
+    document.getElementById("gerer-photos");
+
+const pageGestionPhotos =
+    document.getElementById("page-gestion-photos");
+
+const boutonRetourGestionPhotos =
+    document.getElementById("retour-gestion-photos");
+
+const listePhotosEnregistrees =
+    document.getElementById("liste-photos-enregistrees");
+
+
+// OUVRIR LA PAGE
+
+boutonGererPhotos.addEventListener("click", function() {
+
+    menuPrincipal.style.display = "none";
+
+    pageGestionPhotos.style.display = "flex";
+
+    afficherPhotosEnregistrees();
+
+});
+
+
+// RETOUR AU MENU
+
+boutonRetourGestionPhotos.addEventListener("click", function() {
+
+    pageGestionPhotos.style.display = "none";
+
+    menuPrincipal.style.display = "flex";
+
+});
+
+
+// AFFICHER LES PHOTOS
+
+function afficherPhotosEnregistrees() {
+
+    listePhotosEnregistrees.innerHTML = "";
+
+    photos.forEach(nomPhoto => {
+
+        const bloc = document.createElement("div");
+
+        bloc.style.display = "flex";
+        bloc.style.alignItems = "center";
+        bloc.style.gap = "10px";
+        bloc.style.marginBottom = "15px";
+
+        const image = document.createElement("img");
+
+        image.src = obtenirPhoto(nomPhoto);
+        image.style.width = "100px";
+        image.style.height = "100px";
+        image.style.objectFit = "contain";
+
+        const nom = document.createElement("span");
+
+        nom.textContent = nomPhoto;
+
+        const boutonSupprimer = document.createElement("button");
+
+        boutonSupprimer.textContent = "Supprimer";
+
+        boutonSupprimer.addEventListener("click", async function() {
+
+            const confirmation = confirm(
+                "Supprimer définitivement cette photo de l'application ?"
+            );
+
+            if (!confirmation) return;
+
+            await supprimerPhoto(nomPhoto);
+
+            afficherPhotosEnregistrees();
+
+            statutPhotos.textContent =
+                photos.length + " vêtements enregistrés sur cet iPhone.";
+
+        });
+
+        bloc.appendChild(image);
+        bloc.appendChild(nom);
+        bloc.appendChild(boutonSupprimer);
+
+        listePhotosEnregistrees.appendChild(bloc);
+
+    });
+
+}
+
+
+// SUPPRIMER UNE PHOTO DU STOCKAGE
+
+async function supprimerPhoto(nomPhoto) {
+
+    return new Promise((resolve, reject) => {
+
+        const transaction = db.transaction(
+            "photos",
+            "readwrite"
+        );
+
+        const stockage = transaction.objectStore("photos");
+
+        stockage.delete(nomPhoto);
+
+        transaction.oncomplete = async function() {
+
+            const url = urlsPhotos.get(nomPhoto);
+
+            if (url) {
+                URL.revokeObjectURL(url);
+                urlsPhotos.delete(nomPhoto);
+            }
+
+            await chargerPhotos();
+
+            resolve();
+
+        };
+
+        transaction.onerror = function() {
+
+            reject(transaction.error);
+
+        };
+
+    });
+
+}
