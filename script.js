@@ -496,43 +496,6 @@ let indexVetementCompatible = 0;
 let retourVersGalerie = false;
 
 // ======================================================
-// CHARGEMENT DES PHOTOS
-// ======================================================
-
-async function chargerPhotos() {
-
-    try {
-
-        const reponse = await fetch(
-            "./photos.json"
-        );
-
-        if (!reponse.ok) {
-            throw new Error(
-                "Impossible de charger photos.json"
-            );
-        }
-
-        photos = await reponse.json();
-
-        console.log(
-            "Photos chargées :",
-            photos
-        );
-
-    } catch (erreur) {
-
-        console.error(erreur);
-
-        alert(
-            "Impossible de charger la liste des vêtements.\n\n" +
-            "Vérifie que photos.json existe."
-        );
-    }
-}
-
-
-// ======================================================
 // ANALYSE DU NOM D'UNE PHOTO
 // ======================================================
 
